@@ -1,2 +1,23 @@
 <?php
 
+/**
+ * Implements HOOK_addthis_markup_options_alter().
+ *
+ * Don't forget to add the argument as a reference. You can alter the argument
+ * through this. Otherwise changes will not pass.
+ */
+function addthis_examples_addthis_markup_options_alter(&$options) {
+  // If you have devel module enabled uncomment this to see the options
+  // variable.
+  //dpm($options, 'addthis markup options');
+
+  // To apply this to the block implementation.
+  if (isset($options['#block']) && $options['#display']['type'] == 'addthis_basic_toolbox') {
+
+    // Change the var below to add other services.
+    $displayed_services = 'twitter,google_plusone';
+    $options['#display']['settings']['share_services'] = $displayed_services;
+    $options['#display']['settings']['buttons_size'] = AddThis::CSS_32x32;
+
+  }
+}
