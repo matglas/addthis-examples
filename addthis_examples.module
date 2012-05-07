@@ -5,6 +5,9 @@
  *
  * Don't forget to add the argument as a reference. You can alter the argument
  * through this. Otherwise changes will not pass.
+ *
+ * A block will pass the #block argument to the options array. This is allows
+ * you to changed based on the block placement.
  */
 function addthis_examples_addthis_markup_options_alter(&$options) {
   // If you have devel module enabled uncomment this to see the options
@@ -15,9 +18,24 @@ function addthis_examples_addthis_markup_options_alter(&$options) {
   if (isset($options['#block']) && $options['#display']['type'] == 'addthis_basic_toolbox') {
 
     // Change the var below to add other services.
-    $displayed_services = 'twitter,google_plusone';
+    $displayed_services = 'twitter,google_plusone,facebook';
     $options['#display']['settings']['share_services'] = $displayed_services;
-    $options['#display']['settings']['buttons_size'] = AddThis::CSS_32x32;
+    $options['#display']['settings']['buttons_size'] = AddThis::CSS_16x16;
 
   }
+}
+
+/**
+ * Implements HOOK_addthis_markup_alter().
+ *
+ * The markup is passed in as a render array that is used by the render
+ * function to create the markup for the addthis buttons.
+ */
+function addthis_examples_addthis_markup_alter(&$markup) {
+  // If you have devel module enabled uncomment this to see the options
+  // variable.
+  //dpm($markup, 'addthis markup');
+
+  // To change button size for google plusone for example use this.
+  $markup['google_plusone']['#attributes']['g:plusone:size'] = 'small';
 }
